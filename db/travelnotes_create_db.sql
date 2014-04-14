@@ -19,11 +19,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `travelnotes`.`taxes_types`
+-- Table `travelnotes`.`tax_types`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `travelnotes`.`taxes_types` ;
+DROP TABLE IF EXISTS `travelnotes`.`tax_types` ;
 
-CREATE  TABLE IF NOT EXISTS `travelnotes`.`taxes_types` (
+CREATE  TABLE IF NOT EXISTS `travelnotes`.`tax_types` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `description` VARCHAR(45) NOT NULL ,
   `code` VARCHAR(45) NULL ,
@@ -108,19 +108,19 @@ DROP TABLE IF EXISTS `travelnotes`.`taxes` ;
 CREATE  TABLE IF NOT EXISTS `travelnotes`.`taxes` (
   `id` INT NOT NULL ,
   `ticket_id` INT NULL ,
-  `taxes_type_id` INT NULL ,
+  `tax_type_id` INT NULL ,
   `value` INT NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_taxes_ticket_id` (`ticket_id` ASC) ,
-  INDEX `fk_taxes_type_id` (`taxes_type_id` ASC) ,
+  INDEX `fk_taxes_type_id` (`tax_type_id` ASC) ,
   CONSTRAINT `fk_taxes_ticket_id`
     FOREIGN KEY (`ticket_id` )
     REFERENCES `travelnotes`.`tickets` (`id` )
     ON DELETE RESTRICT
     ON UPDATE CASCADE,
   CONSTRAINT `fk_taxes_type_id`
-    FOREIGN KEY (`taxes_type_id` )
-    REFERENCES `travelnotes`.`taxes_types` (`id` )
+    FOREIGN KEY (`tax_type_id` )
+    REFERENCES `travelnotes`.`tax_types` (`id` )
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
