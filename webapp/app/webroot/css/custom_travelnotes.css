@@ -1,0 +1,26 @@
+.fieldNumber  {
+	width: 60px;
+}
+
+.fieldText {
+	width: 100px;
+}
+
+.fieldLongText {
+	width: 200px;
+}
+
+.small-info {
+	font-size:xx-small;
+	color:red;
+}
+
+#teste {
+	font-size:large;
+	color:blue;
+}
+
+#previsao_table_row
+{
+	color: #FF00FF;
+}

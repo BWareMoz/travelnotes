@@ -1,0 +1,34 @@
+Vagrant::Config.run do |config|
+	# Box setup. TODO: Setup in-office box caches
+	config.vm.box = "precise32"
+	config.vm.box_url = "http://files.vagrantup.com/precise32.box"
+
+	# Network setup
+	config.vm.network :bridged
+	config.vm.forward_port 80, 8084
+
+	# Shared folder setup
+	config.vm.share_folder "sand", "/sand", "../../../"
+
+	# Ensure packages are up to date #TODO: FIX THIS
+	config.vm.provision :shell do |shell|
+		# Uncomment the line below if you're in the Maputo office
+		#shell.inline = "echo \"Acquire::http::Proxy \\\"http://192.168.1.239:3142\\\";\" > /etc/apt/apt.conf.d/01Jembiserverproxy; sudo apt-get update"
+		shell.inline = "sudo apt-get update"
+		end
+
+	# Install required puppet modules
+	config.vm.provision :shell do |shell|
+  		shell.inline = "mkdir -p /etc/puppet/modules;
+           	puppet module install puppetlabs/mysql;
+            puppet module install example42/apache;
+            puppet module install example42/php"
+ 		end
+
+	# Provisioning setup
+	config.vm.provision :puppet do |puppet|
+    	puppet.manifests_path = "../manifests"
+    	puppet.options = ["--verbose"]
+    	puppet.manifest_file  = "sand.pp"	
+   	end
+end
